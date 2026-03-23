@@ -1,0 +1,46 @@
+{
+  "storage": {
+    "cabinet_master_logic": {
+      "exterior_detailing": {
+        "door_config": {
+          "opening_mechanism": ["hinged", "sliding", "bi-fold", "tambour", "flip-up"],
+          "hinge_details": {
+            "type": ["soft-close", "concealed", "barrel"],
+            "opening_angle": "int"
+          },
+          "sliding_track": ["top-hung", "bottom-rolling"],
+          "panel_design": ["shaker", "flat-slab", "raised-panel", "louvre", "fluted"]
+        },
+        "handles_hardware": {
+          "type": ["knob", "bar-pull", "cup-pull", "finger-pull", "edge-pull"],
+          "material": ["brass", "leather-wrapped", "ceramic", "zinc-alloy"],
+          "cc_measurement_mm": "float (screw hole spacing)"
+        }
+      },
+      "interior_anatomy": {
+        "shelving": {
+          "adjustable_increments_mm": "float",
+          "weight_load_capacity_kg": "float",
+          "material": ["glass", "wood", "wire-rack"]
+        },
+        "drawer_micro": {
+          "construction": ["dovetail-joint", "dado-joint", "butt-joint"],
+          "liner_material": ["velvet", "cedar", "anti-slip-rubber"],
+          "divider_config": "custom_array"
+        }
+      },
+      "plinth_and_cornice": {
+        "crown_molding_profile": ["classic", "stepped", "dentil"],
+        "kickboard_recess_depth_mm": "float"
+      }
+    },
+    "structural_integrity": {
+      "joinery_method": ["dovetail", "mortise-and-tenon", "cam-lock", "dowel"],
+      "hinge_specs": {
+        "type": ["soft-close", "piano", "butterfly"],
+        "material": ["stainless", "brass"]
+      },
+      "handle_orientation": ["horizontal", "vertical", "recessed-groove"]
+    }
+  }
+}

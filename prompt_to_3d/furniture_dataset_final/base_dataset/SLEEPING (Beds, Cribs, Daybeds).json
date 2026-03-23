@@ -1,0 +1,41 @@
+{
+  "sleeping": {
+    "bed_master_logic": {
+      "frame_types": ["platform", "canopy", "upholstered", "storage-hydraulic", "sleigh", "murphy"],
+      "headboard_detailing": {
+        "panel_style": ["horizontal-slats", "vertical-slats", "grid", "chevron", "wingback"],
+        "upholstery_micro": {
+          "tufting_style": ["diamond", "biscuit", "button-less", "blind"],
+          "button_type": ["fabric-covered", "metal", "crystal", "recessed"],
+          "border": ["piping", "nailhead-trim", "flange-edge"],
+          "nailhead_finish": ["antique-brass", "chrome", "matte-black"],
+          "nailhead_spacing_mm": "float"
+        },
+        "integrated_tech": {
+          "led_backlighting": {"color_temp": "K", "dimmable": "boolean"},
+          "usb_ports": {"count": "int", "standard": ["USB-A", "USB-C"]},
+          "reading_lights": {"telescopic": "boolean", "lumens": "int"}
+        }
+      },
+      "mattress_support": {
+        "slat_system": {
+          "material": ["pine", "birch-ply", "steel"],
+          "slat_count": "int",
+          "gap_width_mm": "float",
+          "center_support_rail": "boolean"
+        },
+        "box_spring_required": "boolean"
+      },
+      "base_customization": {
+        "footboard_exists": "boolean",
+        "side_rail_height_mm": "float",
+        "under_bed_clearance_mm": "float",
+        "storage_drawers": {
+          "count": "int",
+          "position": ["foot-end", "side-left", "side-right"],
+          "handle_style": ["recessed", "pull", "push-to-open"]
+        }
+      }
+    }
+  }
+}

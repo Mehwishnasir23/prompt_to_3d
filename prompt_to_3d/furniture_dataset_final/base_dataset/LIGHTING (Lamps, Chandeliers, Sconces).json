@@ -1,0 +1,22 @@
+{
+  "lighting_master_logic": {
+    "types": ["pendant", "floor-lamp", "desk-lamp", "chandelier", "wall-sconce"],
+    "bulb_optics": {
+      "socket_type": ["E26", "E27", "GU10", "Integrated-LED"],
+      "color_temperature_k": "range(2000, 6500)",
+      "lumen_output": "int",
+      "beam_angle": "degrees"
+    },
+    "shade_anatomy": {
+      "shapes": ["drum", "cone", "dome", "geometric-cage", "bell"],
+      "diffuser_material": ["frosted-glass", "linen", "perforated-metal", "polycarbonate"],
+      "translucency_factor": "0.0 (opaque) to 1.0 (transparent)"
+    },
+    "articulation": {
+      "swivel_joints_count": "int",
+      "telescopic_neck": "boolean",
+      "boom_arm_length": "mm",
+      "counterweight_balance": "boolean"
+    }
+  }
+}

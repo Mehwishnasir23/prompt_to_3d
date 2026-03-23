@@ -1,0 +1,31 @@
+{
+  "styles": [
+    "modern",
+    "classic",
+    "minimal",
+    "luxury"
+  ],
+  "materials": [
+    "wood",
+    "metal",
+    "plastic",
+    "fabric"
+  ],
+  "colors": [
+    "white",
+    "black",
+    "brown",
+    "gray",
+    "oak"
+  ],
+  "leg_counts": [
+    3,
+    4,
+    5
+  ],
+  "dimension_variation_percent": [
+    10,
+    20,
+    30
+  ]
+}

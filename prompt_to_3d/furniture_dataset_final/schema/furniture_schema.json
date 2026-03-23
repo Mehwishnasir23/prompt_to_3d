@@ -1,0 +1,15 @@
+{
+  "furniture_type": "string",
+  "category": "string",
+  "style": "string",
+  "dimensions": {
+    "height": "number",
+    "width": "number",
+    "depth": "number",
+    "length": "number"
+  },
+  "components": {},
+  "material": {},
+  "colors": {},
+  "features": {}
+}

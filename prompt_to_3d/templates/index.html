@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt3D | 3D Studio</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="overflow-hidden bg-[#0a0a0c]">
+
+    <div class="flex h-screen">
+        <div class="sidebar w-80 p-6 flex flex-col h-full z-10 border-r border-white/5 bg-[#111827]/80 backdrop-blur-xl">
+            <h1 class="text-2xl font-black mb-10 tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+                Prompt3D.AI
+            </h1>
+
+            <div class="space-y-6 flex-grow">
+                <div class="group">
+                    <label class="block text-[10px] uppercase tracking-[2px] font-bold mb-2 text-slate-500 group-focus-within:text-blue-400">Main Prompt</label>
+                    <textarea id="promptInput" rows="4"
+                        class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500 transition-all"
+                        placeholder=""></textarea>
+                </div>
+
+                <div class="group">
+                    <label class="block text-[10px] uppercase tracking-[2px] font-bold mb-2 text-slate-500 group-focus-within:text-blue-400">Optional Edit</label>
+                    <input id="editInput" type="text"
+                        class="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-sm text-white outline-none focus:border-blue-500 transition-all"
+                        placeholder="">
+                </div>
+
+                <button id="generateBtn" onclick="generateModel()"
+                    style="background: linear-gradient(45deg, #2563eb, #0891b2); min-height: 60px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);"
+                    class="w-full text-white font-bold rounded-xl flex items-center justify-center hover:scale-[1.02] active:scale-95 transition-all mt-4 border border-white/10">
+                    <span id="btnText" class="tracking-widest">GENERATE 3D MODEL</span>
+                    <i id="loader" class="fas fa-circle-notch fa-spin ml-2 hidden"></i>
+                </button>
+            </div>
+
+            <div class="mt-auto pt-6 border-t border-white/5 text-center">
+                <button onclick="downloadTrigger()" class="text-slate-500 hover:text-cyan-400 text-[11px] font-bold tracking-widest uppercase transition-colors">
+                    <i class="fas fa-download mr-2"></i> Export .OBJ File
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-grow relative overflow-hidden">
+            <div id="canvas-container" class="w-full h-full cursor-grab"></div>
+
+            <div class="absolute bottom-8 left-8 pointer-events-none">
+                <div class="viewer-info p-5 rounded-2xl bg-black/40 backdrop-blur-md border border-white/5 border-l-4 border-l-cyan-500">
+                    <div class="flex items-center mb-1">
+                        <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse mr-2"></div>
+                        <p class="text-[10px] font-bold tracking-widest text-slate-300 uppercase">Interactive Viewport</p>
+                    </div>
+                    <p class="text-[9px] text-slate-500 uppercase tracking-wider italic">Hold Left-Click to Orbit</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let scene, camera, renderer, controls, currentModel;
+
+        function init3D() {
+            const container = document.getElementById('canvas-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a0c);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 2000);
+            camera.position.set(350, 350, 350);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(200, 500, 200);
+            scene.add(light);
+
+            scene.add(new THREE.GridHelper(600, 40, 0x222222, 0x111111));
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        async function generateModel() {
+            const prompt = document.getElementById('promptInput').value;
+            if(!prompt) return alert("Write something in the prompt first!");
+
+            const loader = document.getElementById('loader');
+            const btnText = document.getElementById('btnText');
+            const btn = document.getElementById('generateBtn');
+
+            loader.classList.remove('hidden');
+            btnText.innerText = "GENERATING...";
+            btn.style.opacity = "0.7";
+
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ prompt: prompt, edit: document.getElementById('editInput').value })
+                });
+
+                const data = await response.json();
+                if(data.success) {
+                    loadOBJModel(data.file_path + '?v=' + Math.random());
+                }
+            } catch (err) {
+                alert("Something went wrong!");
+            } finally {
+                loader.classList.add('hidden');
+                btnText.innerText = "GENERATE 3D MODEL";
+                btn.style.opacity = "1";
+            }
+        }
+
+        function loadOBJModel(url) {
+            if(currentModel) scene.remove(currentModel);
+            const loader = new THREE.OBJLoader();
+            loader.load(url, (obj) => {
+                obj.traverse((child) => {
+                    if (child.isMesh) {
+                        child.material = new THREE.MeshStandardMaterial({
+                            color: 0x888888,
+                            flatShading: true,
+                            side: THREE.DoubleSide
+                        });
+                    }
+                });
+                currentModel = obj;
+                scene.add(obj);
+            });
+        }
+
+        function downloadTrigger() { window.location.href = '/download'; }
+        window.onload = init3D;
+        window.onresize = () => {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        };
+    </script>
+</body>
+</html>

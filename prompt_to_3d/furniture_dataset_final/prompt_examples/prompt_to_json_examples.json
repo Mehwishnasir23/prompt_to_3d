@@ -1,0 +1,31 @@
+[
+  {
+    "prompt": "White wooden chair with 4 legs and backrest",
+    "output": {
+      "furniture_type": "chair",
+      "material": "wood",
+      "colors": {
+        "seat": "white"
+      },
+      "components": {
+        "legs": {
+          "count": 4
+        },
+        "backrest": true
+      }
+    }
+  },
+  {
+    "prompt": "Modern sofa with 3 seats and short legs",
+    "output": {
+      "furniture_type": "sofa",
+      "style": "modern",
+      "components": {
+        "seats": 3,
+        "legs": {
+          "height": 10
+        }
+      }
+    }
+  }
+]

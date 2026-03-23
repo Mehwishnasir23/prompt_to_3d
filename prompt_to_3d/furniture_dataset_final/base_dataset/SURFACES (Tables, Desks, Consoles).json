@@ -1,0 +1,26 @@
+{
+  "surfaces_master_logic": {
+    "table_types": ["dining", "coffee", "gaming-desk", "standing-desk", "conference", "vanity", "nested-tables"],
+    "top_surface_anatomy": {
+      "shapes": ["rectangle", "oval", "circle", "live-edge", "abstract-organic", "hexagonal"],
+      "material_depth_mm": "float",
+      "edge_profiles": ["bullnose", "beveled", "chamfered", "knife-edge", "ogee", "waterfall"],
+      "surface_inlays": {
+        "materials": ["epoxy-resin", "brass-strips", "leather-pad", "glass-center"],
+        "pattern": ["linear", "concentric", "geometric"]
+      }
+    },
+    "leg_logic_custom": {
+      "count": "custom_int (1 to 8)",
+      "configuration": ["tripod", "quad", "x-base", "trestle", "pedestal-column", "hairpin-radial"],
+      "stability_spread_factor": "0.1 to 1.0",
+      "flaring_angle_degrees": "float",
+      "leg_tapering": {"top_width": "mm", "bottom_width": "mm"}
+    },
+    "integrated_features": {
+      "cable_management": {"grommet_style": ["metal", "brush"], "under_tray": "boolean"},
+      "power_modules": {"usb_a_count": "int", "usb_c_count": "int", "wireless_charging_pad": "boolean"},
+      "drawer_units": {"mounting": ["under-mount", "side-fixed"], "soft_close": "boolean"}
+    }
+  }
+}

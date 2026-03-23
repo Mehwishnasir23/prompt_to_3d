@@ -1,0 +1,71 @@
+{
+  "seating": {
+    "chair_master_logic": {
+      "base_variants": {
+        "leg_system": {
+          "count": "range(1, 12)",
+          "config": ["tripod", "quad", "pentapod", "hexapod", "pedestal", "sled", "cantilever"],
+          "leg_geometry": {
+            "profile": ["tapered", "fluted", "cabriole", "square", "cylindrical", "hairpin", "spiral"],
+            "cross_section": ["circular", "elliptical", "polygonal"],
+            "thickness_gradient": {"top_diameter_mm": "float", "bottom_diameter_mm": "float"},
+            "angle_offset_degrees": "float (stability control)"
+          },
+          "attachments": {
+            "castors": {"count": "int", "material": ["nylon", "rubber", "steel"], "locking": "boolean"},
+            "glides": {"material": ["felt", "plastic", "teflon"], "leveling_adjustment_mm": "float"},
+            "footrest_ring": {"radius_mm": "float", "height_pos_mm": "float", "spoke_count": "int"}
+          }
+        }
+      },
+      "seat_anatomy": {
+        "core": {
+          "base_plate": ["plywood", "plastic-injected", "steel-frame"],
+          "suspension": ["webbing", "zig-zag-springs", "pocket-springs", "solid"],
+          "foam_layers": [
+            {"type": "base-foam", "density_kg_m3": "float", "thickness_mm": "float"},
+            {"type": "memory-foam", "density_kg_m3": "float", "thickness_mm": "float"},
+            {"type": "cooling-gel", "thickness_mm": "float"}
+          ]
+        },
+        "contouring": {
+          "waterfall_front_radius": "mm",
+          "thigh_bolster_height": "mm",
+          "seat_pan_depth_adjustment": "boolean"
+        }
+      },
+      "backrest_anatomy": {
+        "structure": ["full-back", "mid-back", "low-back", "split-wing", "ribbed"],
+        "lumbar_module": {
+          "type": ["integrated", "external-pillow", "active-mechanical"],
+          "height_range_mm": "float",
+          "depth_range_mm": "float",
+          "curvature_intensity": "float (0.0 - 1.0)"
+        },
+        "headrest": {
+          "integrated": "boolean",
+          "tilt_degrees": "float",
+          "vertical_travel_mm": "float",
+          "wing_angle": "float"
+        }
+      },
+      "armrest_mechanics": {
+        "dimensions": {"length_mm": "float", "width_mm": "float", "arc_radius": "float"},
+        "mobility": {
+          "1D_height": "boolean",
+          "2D_width": "boolean",
+          "3D_depth": "boolean",
+          "4D_pivot": "degrees",
+          "5D_tilt": "degrees"
+        },
+        "padding": {"material": ["soft-touch-pu", "upholstered", "solid-wood"], "concavity_depth": "mm"}
+      }
+    },
+    "micro_detailing": {
+      "seam_type": ["french-seam", "double-needle", "piping", "flat-felled"],
+      "thread_weight": ["light", "heavy-duty-contrast"],
+      "stitch_density": "stitches_per_inch",
+      "welt_thickness": "mm"
+    }
+  }
+}
